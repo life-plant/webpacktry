@@ -1,8 +1,7 @@
-import $ from 'jquery';
+import './src/css/page1.css';
 
-window.jQuery = window.$ = $;
+import './vendor';
 
-import './src/js/page1.js';
+import './src/js/page1';
 
-
-console.log(a);
+export {};
