@@ -6,8 +6,8 @@ console.log(__dirname);
 module.exports = {
     entry: ["babel-polyfill", "./app/index"],
     output: {
-        path: path.resolve(__dirname,"/dist"),
-        // publicPath: "assets",
+        path: path.resolve(__dirname,"app/dist"),
+        publicPath: "",
         filename: 'bundle.js'
     },
     mode: 'development',
@@ -16,7 +16,8 @@ module.exports = {
         { 
             test: /\.js$/,
             exclude: /node_modules/,
-            use: ["babel-loader", "eslint-loader"]},
+            use: ["babel-loader", "eslint-loader"]
+        },
         { 
             test: /\.css$/,
             exclude: /node_modules/,
@@ -37,7 +38,7 @@ module.exports = {
             options: {
                 limit: 8192,
                 mimetype: 'image/png',
-                // name: 'asset/[name].[ext]'
+                name: 'src/assets/[name].[ext]'
             }
 　　　　}
       ]
@@ -51,11 +52,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './app/index.html'),
             filename:'index.html',
-            // chunks: ['app'],
-            // files: {
-            //     js: [ "assets/bundle.js"]
-            // }
-            // inject: 'body'
         })
     ]
 }
+
