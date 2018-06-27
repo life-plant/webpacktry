@@ -1,14 +1,18 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin =require('extract-text-webpack-plugin');
 var path =require('path');
 
 
 console.log(__dirname);
 module.exports = {
-    entry: ["babel-polyfill", "./app/index"],
+    entry: {
+        page1:["babel-polyfill", "./app/index"],
+        page2:["babel-polyfill", "./app/index2"],
+    },
     output: {
         path: path.resolve(__dirname,"app/dist"),
         publicPath: "",
-        filename: 'bundle.js'
+        filename: 'js/[name]/[chunkhash:8].bundle.js',
     },
     mode: 'development',
     module: {
@@ -21,14 +25,22 @@ module.exports = {
         { 
             test: /\.css$/,
             exclude: /node_modules/,
-            use: ["style-loader", "css-loader"] 
+            // use:ExtractTextWebpackPlugin.extract({
+            //     fallback: "style-loader",
+            //     use: "css-loader"
+            // }),
+            use: ExtractTextPlugin.extract({
+              fallback: "style-loader",
+              use: "css-loader"
+            }),
+            // use:["style-loader", "css-loader"]
         },
         {
             test: /\.(html)$/,
                 use: {
                 loader: 'html-loader',
                 options: {
-                    attrs: [':data-src']
+                    attrs: [':a-src']
                 }
             }
         },
@@ -36,7 +48,7 @@ module.exports = {
             test: /\.(png|jpg)$/,
             loader: 'url-loader',
             options: {
-                limit: 8192,
+                limit: 100,
                 mimetype: 'image/png',
                 name: 'src/assets/[name].[ext]'
             }
@@ -49,9 +61,16 @@ module.exports = {
         port: 9000
     },
     plugins:[
+        new ExtractTextPlugin("[name].css"),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './app/index.html'),
             filename:'index.html',
+            chunks:['page1']
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './app/index2.html'),
+            filename:'index2.html',
+            chunks:['page2']
         })
     ]
 }
