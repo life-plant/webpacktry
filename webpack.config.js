@@ -38,17 +38,14 @@ module.exports = {
         {
             test: /\.(html)$/,
                 use: {
-                loader: 'html-loader',
-                options: {
-                    attrs: [':a-src']
-                }
+                loader: 'html-withimg-loader',
             }
         },
         {
             test: /\.(png|jpg)$/,
             loader: 'url-loader',
             options: {
-                limit: 100,
+                limit: 10000,
                 mimetype: 'image/png',
                 name: 'src/assets/[name].[ext]'
             }
@@ -63,12 +60,12 @@ module.exports = {
     plugins:[
         new ExtractTextPlugin("[name].css"),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './app/index.html'),
+            template: 'html-withimg-loader!' + path.resolve(__dirname, './app/index.html'),
             filename:'index.html',
             chunks:['page1']
         }),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './app/index2.html'),
+            template: 'html-withimg-loader!' + path.resolve(__dirname, './app/index2.html'),
             filename:'index2.html',
             chunks:['page2']
         })

@@ -7,8 +7,6 @@ import './vendor';
 
 import './src/js/page1';
 
-// require("html-loader!./index.html");
-require("html-loader!./index.html");
 
 
 export {};
